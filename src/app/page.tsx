@@ -6,7 +6,7 @@ import LinkedInPreview from '@/components/LinkedInPreview';
 
 export default function Home() {
   const [content, setContent] = useState(
-    '<p>I finally released <strong>my first AI project</strong>!</p><p>It\'s not something I work overnight or just hours. I put my heart and soul into this. You can now post your LinkedIn post with bold, italic, underlined and more for free.</p><p>See my project here</p>'
+    '<p>Start writing and your post will appear here</p><p>Set your text to <strong>bold</strong>, <em>italic</em>, or <s>strike through it</s></p><p>This line will appear below the more...</p>'
   );
 
   return (

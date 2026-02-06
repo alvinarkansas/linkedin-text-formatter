@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Globe,
   ThumbsUp,
@@ -16,12 +16,29 @@ interface LinkedInPreviewProps {
   content: string;
 }
 
+// Split content into above/below fold based on paragraph count
+function splitContent(html: string, maxParagraphs: number = 2): { above: string; below: string } {
+  const paragraphs = html.split(/<\/p>/i);
+
+  if (paragraphs.length <= maxParagraphs + 1) {
+    return { above: html, below: "" };
+  }
+
+  const aboveFold = paragraphs.slice(0, maxParagraphs).join("</p>") + "</p>";
+  const belowFold = paragraphs.slice(maxParagraphs).join("</p>");
+
+  return { above: aboveFold, below: belowFold };
+}
+
 export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
   const [previewMode, setPreviewMode] = useState<"desktop" | "mobile">(
     "desktop",
   );
 
   const isMobile = previewMode === "mobile";
+
+  const { above, below } = useMemo(() => splitContent(content, 2), [content]);
+  const hasMoreContent = below.trim().length > 0;
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -97,14 +114,37 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
 
         {/* Post Content */}
         <div className="px-3 py-3">
+          {/* Above fold content */}
           <div
             className="text-[14px] text-gray-900 leading-[1.4] whitespace-pre-wrap linkedin-content"
             style={{
               fontFamily:
                 '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }}
-            dangerouslySetInnerHTML={{ __html: content }}
+            dangerouslySetInnerHTML={{ __html: above }}
           />
+
+          {/* ...more button with dashed divider */}
+          {hasMoreContent && (
+            <>
+              <div className="flex items-center gap-2 my-1">
+                <div className="flex-1 border-t border-dashed border-gray-300" />
+                <span className="text-[14px] text-gray-500 hover:text-blue-600 cursor-pointer">
+                  ...more
+                </span>
+              </div>
+
+              {/* Below fold content */}
+              <div
+                className="text-[14px] text-gray-900 leading-[1.4] whitespace-pre-wrap linkedin-content"
+                style={{
+                  fontFamily:
+                    '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                }}
+                dangerouslySetInnerHTML={{ __html: below }}
+              />
+            </>
+          )}
         </div>
 
         {/* Engagement Stats */}
