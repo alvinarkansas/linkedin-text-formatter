@@ -10,6 +10,7 @@ import {
   Smartphone,
   Monitor,
 } from "lucide-react";
+import Image from "next/image";
 
 interface LinkedInPreviewProps {
   content: string;
@@ -24,8 +25,8 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
 
   return (
     <div className="flex flex-col items-center w-full">
-      {/* Preview Mode Toggle */}
-      <div className="flex items-center gap-2 mb-6">
+      {/* Preview Mode Toggle - hidden on mobile screens */}
+      <div className="hidden sm:flex items-center gap-2 mb-6">
         <span className="text-sm text-gray-600 mr-2">Post Preview</span>
         <div className="flex items-center bg-gray-100 rounded-lg p-1">
           <button
@@ -63,9 +64,13 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
         <div className="p-3 pb-0">
           <div className="flex items-start gap-3">
             {/* Avatar */}
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold text-lg flex-shrink-0">
-              AD
-            </div>
+            <Image
+              src="/avatar.jpeg"
+              alt="Jonathan Chew"
+              className="w-12 h-12 rounded-full object-cover shrink-0"
+              width={160}
+              height={160}
+            />
 
             {/* Profile Info */}
             <div className="flex-1 min-w-0">
@@ -124,10 +129,10 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
 
         {/* Action Buttons */}
         <div className="px-2 py-1 flex items-center justify-between">
-          <ActionButton icon={<ThumbsUp size={18} />} label="Like" />
-          <ActionButton icon={<MessageCircle size={18} />} label="Comment" />
-          <ActionButton icon={<Repeat2 size={18} />} label="Repost" />
-          <ActionButton icon={<Send size={18} />} label="Send" />
+          <ActionButton icon={<ThumbsUp size={18} />} label="Like" isMobile={isMobile} />
+          <ActionButton icon={<MessageCircle size={18} />} label="Comment" isMobile={isMobile} />
+          <ActionButton icon={<Repeat2 size={18} />} label="Repost" isMobile={isMobile} />
+          <ActionButton icon={<Send size={18} />} label="Send" isMobile={isMobile} />
         </div>
       </div>
     </div>
@@ -137,14 +142,16 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
 function ActionButton({
   icon,
   label,
+  isMobile
 }: {
   icon: React.ReactNode;
   label: string;
+  isMobile?: boolean;
 }) {
   return (
     <button className="flex items-center gap-2 px-3 py-3 rounded hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-900">
       {icon}
-      <span className="text-[14px] font-medium hidden sm:inline">{label}</span>
+      {!isMobile && <span className="text-[14px] hidden font-medium sm:inline">{label}</span>}
     </button>
   );
 }

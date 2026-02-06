@@ -25,14 +25,14 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-160px)]">
+        <div className="flex flex-col lg:flex-row gap-6 lg:h-[calc(100vh-160px)]">
           {/* Editor Pane */}
-          <div className="flex-1 bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="flex-1 min-h-[400px] bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
             <RichTextEditor onUpdate={setContent} />
           </div>
 
           {/* Preview Pane */}
-          <div className="flex-1 flex justify-center items-start py-4 overflow-auto">
+          <div className="flex-1 flex justify-center items-start py-4 lg:overflow-auto">
             <LinkedInPreview content={content} />
           </div>
         </div>
