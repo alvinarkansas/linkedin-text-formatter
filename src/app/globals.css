@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f3f2ef;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* TipTap Editor Styles */
+.tiptap {
+  outline: none;
+}
+
+.tiptap p {
+  margin: 0 0 1em 0;
+}
+
+.tiptap p:last-child {
+  margin-bottom: 0;
+}
+
+.tiptap strong {
+  font-weight: 700;
+}
+
+.tiptap em {
+  font-style: italic;
+}
+
+.tiptap u {
+  text-decoration: underline;
+}
+
+.tiptap s {
+  text-decoration: line-through;
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+}
+
+.tiptap li {
+  margin: 0.25rem 0;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* LinkedIn Preview Content Styles */
+.linkedin-content p {
+  margin: 0 0 0.75em 0;
+}
+
+.linkedin-content p:last-child {
+  margin-bottom: 0;
+}
+
+.linkedin-content strong {
+  font-weight: 700;
+}
+
+.linkedin-content em {
+  font-style: italic;
+}
+
+.linkedin-content u {
+  text-decoration: underline;
+}
+
+.linkedin-content s {
+  text-decoration: line-through;
+}
+
+.linkedin-content ul,
+.linkedin-content ol {
+  padding-left: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+.linkedin-content ul {
+  list-style-type: disc;
+}
+
+.linkedin-content ol {
+  list-style-type: decimal;
+}
+
+.linkedin-content li {
+  margin: 0.25rem 0;
 }
