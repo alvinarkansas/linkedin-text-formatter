@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LinkedIn Text Formatter
 
-## Getting Started
+A beautiful, real-time LinkedIn post formatter and previewer that lets you style your posts with bold, italic, underline, and strikethrough text — then copy it with Unicode formatting that works directly on LinkedIn.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Rich Text Editor** — WYSIWYG editor with formatting toolbar (bold, italic, underline, strikethrough, lists)
+- **Live Preview** — See exactly how your post will look on LinkedIn as you type
+- **Mobile/Desktop Toggle** — Preview your post in different screen sizes
+- **Unicode Copy** — Copies formatted text as Unicode characters that retain styling when pasted into LinkedIn
+- **LinkedIn-Accurate Mockup** — Pixel-perfect recreation of LinkedIn's post UI including profile header, engagement stats, and action buttons
+- **"See More" Simulation** — Shows how LinkedIn truncates longer posts with the familiar "...more" indicator
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| ⚛️ **Next.js 16** | React framework with App Router |
+| 🎨 **Tailwind CSS 4** | Utility-first styling |
+| ✏️ **TipTap** | Headless rich text editor |
+| 🎯 **Lucide React** | Beautiful icon library |
+| 📘 **TypeScript** | Type-safe development |
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm (recommended) or npm
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/linkedin-text-formatter.git
+   cd linkedin-text-formatter
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   pnpm dev
+   ```
+
+4. **Open your browser**
+
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── globals.css       # Global styles + TipTap editor styles
+│   ├── layout.tsx        # Root layout with metadata
+│   └── page.tsx          # Main page with two-pane layout
+├── components/
+│   ├── RichTextEditor.tsx    # TipTap WYSIWYG editor
+│   └── LinkedInPreview.tsx   # LinkedIn post mockup
+└── utils/
+    └── unicodeConverter.ts   # HTML to Unicode conversion
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📝 Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Write your post in the left editor pane
+2. Use the toolbar to format text (Bold, Italic, Underline, Strikethrough, Lists)
+3. See the live preview update on the right
+4. Click **"Copy text"** to copy your formatted post
+5. Paste directly into LinkedIn — formatting preserved!
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📄 License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
