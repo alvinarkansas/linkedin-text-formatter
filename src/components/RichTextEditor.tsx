@@ -1,6 +1,8 @@
 'use client';
 
 import { useEditor, EditorContent } from '@tiptap/react';
+import { DOMSerializer } from '@tiptap/pm/model';
+import type { EditorView } from '@tiptap/pm/view';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -51,6 +53,25 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
     editorProps: {
       attributes: {
         class: 'prose prose-sm max-w-none focus:outline-none min-h-[300px] px-4 py-3',
+      },
+      handleDOMEvents: {
+        copy: (view: EditorView, event: ClipboardEvent) => {
+          const { from, to } = view.state.selection;
+          if (from === to) return false;
+
+          const serializer = DOMSerializer.fromSchema(view.state.schema);
+          const fragment = serializer.serializeFragment(
+            view.state.doc.slice(from, to).content
+          );
+          const div = document.createElement('div');
+          div.appendChild(fragment);
+          const html = div.innerHTML;
+
+          const unicodeText = htmlToUnicode(html);
+          event.clipboardData?.setData('text/plain', unicodeText);
+          event.preventDefault();
+          return true;
+        },
       },
     },
     immediatelyRender: false,

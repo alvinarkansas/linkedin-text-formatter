@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   Globe,
   ThumbsUp,
@@ -11,6 +11,7 @@ import {
   Monitor,
 } from "lucide-react";
 import Image from "next/image";
+import { htmlToUnicode } from "@/utils/unicodeConverter";
 
 interface LinkedInPreviewProps {
   content: string;
@@ -39,6 +40,21 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
 
   const { above, below } = useMemo(() => splitContent(content, 2), [content]);
   const hasMoreContent = below.trim().length > 0;
+
+  const handleCopy = useCallback((e: React.ClipboardEvent) => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) return;
+
+    const range = selection.getRangeAt(0);
+    const container = document.createElement("div");
+    container.appendChild(range.cloneContents());
+    const html = container.innerHTML;
+
+    const unicodeText = htmlToUnicode(html);
+
+    e.clipboardData.setData("text/plain", unicodeText);
+    e.preventDefault();
+  }, []);
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -113,7 +129,7 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
         </div>
 
         {/* Post Content */}
-        <div className="px-3 py-3">
+        <div className="px-3 py-3" onCopy={handleCopy}>
           {/* Above fold content */}
           <div
             className="text-[14px] text-gray-900 leading-[1.4] whitespace-pre-wrap linkedin-content"
