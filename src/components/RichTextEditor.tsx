@@ -92,6 +92,49 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
     }
   }, [editor]);
 
+  const toggleList = useCallback(
+    (listType: 'bulletList' | 'orderedList') => {
+      if (!editor) return;
+
+      // Only split hard breaks when converting TO a list, not when toggling off
+      if (!editor.isActive(listType)) {
+        const { state } = editor;
+        const { from, to } = state.selection;
+
+        // Expand range to cover full parent paragraphs
+        const $from = state.doc.resolve(from);
+        const $to = state.doc.resolve(to);
+        const startPos = $from.start($from.depth);
+        const endPos = $to.end($to.depth);
+
+        const hardBreakPositions: number[] = [];
+        state.doc.nodesBetween(startPos, endPos, (node, pos) => {
+          if (node.type.name === 'hardBreak') {
+            hardBreakPositions.push(pos);
+          }
+        });
+
+        if (hardBreakPositions.length > 0) {
+          const tr = state.tr;
+          // Process from end to start so earlier positions stay valid
+          for (let i = hardBreakPositions.length - 1; i >= 0; i--) {
+            const pos = hardBreakPositions[i];
+            tr.delete(pos, pos + 1);
+            tr.split(pos);
+          }
+          editor.view.dispatch(tr);
+        }
+      }
+
+      if (listType === 'bulletList') {
+        editor.chain().focus().toggleBulletList().run();
+      } else {
+        editor.chain().focus().toggleOrderedList().run();
+      }
+    },
+    [editor]
+  );
+
   if (!editor) {
     return null;
   }
@@ -176,14 +219,14 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
 
         <div className="flex items-center gap-1">
           <ToolbarButton
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            onClick={() => toggleList('bulletList')}
             isActive={editor.isActive('bulletList')}
             title="Bullet List"
           >
             <List size={18} />
           </ToolbarButton>
           <ToolbarButton
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            onClick={() => toggleList('orderedList')}
             isActive={editor.isActive('orderedList')}
             title="Numbered List"
           >
