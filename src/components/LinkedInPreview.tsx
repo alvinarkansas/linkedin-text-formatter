@@ -94,7 +94,12 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
         }`}
       >
         {/* Profile Header */}
-        <div className="p-3 pb-0">
+        <a
+          href="https://www.linkedin.com/in/jonathanchew/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block p-3 pb-0 rounded-t-xl hover:bg-gray-50 transition-colors"
+        >
           <div className="flex items-start gap-3">
             {/* Avatar */}
             <Image
@@ -126,7 +131,7 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
               </div>
             </div>
           </div>
-        </div>
+        </a>
 
         {/* Post Content */}
         <div className="px-3 py-3" onCopy={handleCopy}>
