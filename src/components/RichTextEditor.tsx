@@ -18,8 +18,10 @@ import {
   Eraser,
   Copy,
   Check,
+  Smile,
 } from 'lucide-react';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
+import EmojiPicker from './EmojiPicker';
 import { htmlToUnicode } from '@/utils/unicodeConverter';
 
 interface RichTextEditorProps {
@@ -28,6 +30,8 @@ interface RichTextEditorProps {
 
 export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
   const [copied, setCopied] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const emojiButtonRef = useRef<HTMLButtonElement>(null);
 
   const editor = useEditor({
     extensions: [
@@ -46,7 +50,7 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
         placeholder: 'Start writing your LinkedIn post...',
       }),
     ],
-    content: '<p>Start writing and your post will appear here</p><p>Set your text to <strong>bold</strong>, <em>italic</em>, or <s>strike through it</s></p><p>This line will appear below the more...</p>',
+    content: '<p>Start writing and your post will appear here</p><p>Set your text to <strong>bold</strong>, <em>italic</em>, <s>strike through it</s>, or even add emoji 🤩!</p><p>This line will appear below the more...</p>',
     onUpdate: ({ editor }) => {
       onUpdate(editor.getHTML());
     },
@@ -217,7 +221,7 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
           </ToolbarButton>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 border-r border-gray-200 pr-2 mr-1">
           <ToolbarButton
             onClick={() => toggleList('bulletList')}
             isActive={editor.isActive('bulletList')}
@@ -232,6 +236,29 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
           >
             <ListOrdered size={18} />
           </ToolbarButton>
+        </div>
+
+        <div className="flex items-center gap-1">
+          <button
+            ref={emojiButtonRef}
+            onClick={() => setShowEmojiPicker((prev) => !prev)}
+            title="Emoji"
+            className={`p-2 rounded hover:bg-gray-100 transition-colors ${
+              showEmojiPicker ? 'bg-gray-200 text-blue-600' : 'text-gray-600'
+            }`}
+          >
+            <Smile size={18} />
+          </button>
+          {showEmojiPicker && (
+            <EmojiPicker
+              anchorRef={emojiButtonRef}
+              onSelect={(emoji) => {
+                editor.chain().focus().insertContent(emoji).run();
+                setShowEmojiPicker(false);
+              }}
+              onClose={() => setShowEmojiPicker(false)}
+            />
+          )}
         </div>
       </div>
 
