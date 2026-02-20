@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import RichTextEditor from '@/components/RichTextEditor';
 import LinkedInPreview from '@/components/LinkedInPreview';
+import NewsletterModal from '@/components/NewsletterModal';
 
 export default function Home() {
   const [content, setContent] = useState(
@@ -11,6 +12,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      <NewsletterModal />
       {/* Header */}
       <header className="bg-white border-b border-black/10 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
