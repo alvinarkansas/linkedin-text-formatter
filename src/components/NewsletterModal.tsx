@@ -1,24 +1,24 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, SubmitEvent } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
 
 const STORAGE_KEY = "ai_minimalist/newsletter_dismissed";
 
 export default function NewsletterModal() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return !localStorage.getItem(STORAGE_KEY);
+    } catch {
+      return true;
+    }
+  });
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const dismissed = localStorage.getItem(STORAGE_KEY);
-    if (!dismissed) {
-      setVisible(true);
-    }
-  }, []);
 
   const dismissPermanently = useCallback(() => {
     localStorage.setItem(STORAGE_KEY, "1");
@@ -30,7 +30,7 @@ export default function NewsletterModal() {
   }, []);
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
+    async (e: SubmitEvent<HTMLFormElement>) => {
       e.preventDefault();
       setError("");
 
