@@ -157,8 +157,8 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
     <button
       onClick={onClick}
       title={title}
-      className={`p-2 rounded hover:bg-gray-100 transition-colors ${
-        isActive ? 'bg-gray-200 text-blue-600' : 'text-gray-600'
+      className={`p-2 hover:bg-black/5 transition-colors ${
+        isActive ? 'bg-black/10 text-black' : 'text-black/60'
       }`}
     >
       {children}
@@ -168,8 +168,8 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center gap-1 p-2 border-b border-gray-200 flex-wrap">
-        <div className="flex items-center gap-1 border-r border-gray-200 pr-2 mr-1">
+      <div className="flex items-center gap-1 p-2 border-b border-black/10 flex-wrap">
+        <div className="flex items-center gap-1 border-r border-black/10 pr-2 mr-1">
           <ToolbarButton
             onClick={() => editor.chain().focus().toggleBold().run()}
             isActive={editor.isActive('bold')}
@@ -200,7 +200,7 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
           </ToolbarButton>
         </div>
 
-        <div className="flex items-center gap-1 border-r border-gray-200 pr-2 mr-1">
+        <div className="flex items-center gap-1 border-r border-black/10 pr-2 mr-1">
           <ToolbarButton
             onClick={() => editor.chain().focus().undo().run()}
             title="Undo (Ctrl+Z)"
@@ -221,7 +221,7 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
           </ToolbarButton>
         </div>
 
-        <div className="flex items-center gap-1 border-r border-gray-200 pr-2 mr-1">
+        <div className="flex items-center gap-1 border-r border-black/10 pr-2 mr-1">
           <ToolbarButton
             onClick={() => toggleList('bulletList')}
             isActive={editor.isActive('bulletList')}
@@ -243,8 +243,8 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
             ref={emojiButtonRef}
             onClick={() => setShowEmojiPicker((prev) => !prev)}
             title="Emoji"
-            className={`p-2 rounded hover:bg-gray-100 transition-colors ${
-              showEmojiPicker ? 'bg-gray-200 text-blue-600' : 'text-gray-600'
+            className={`p-2 hover:bg-black/5 transition-colors ${
+              showEmojiPicker ? 'bg-black/10 text-black' : 'text-black/60'
             }`}
           >
             <Smile size={18} />
@@ -268,10 +268,10 @@ export default function RichTextEditor({ onUpdate }: RichTextEditorProps) {
       </div>
 
       {/* Copy Button */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-black/10">
         <button
           onClick={handleCopy}
-          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 bg-[#0a66c2] hover:bg-[#004182] text-white rounded-full font-medium transition-colors"
+          className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-2.5 bg-black hover:bg-black/80 text-white font-medium transition-colors"
         >
           {copied ? (
             <>

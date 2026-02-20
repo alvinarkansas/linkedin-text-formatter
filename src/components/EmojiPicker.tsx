@@ -246,31 +246,31 @@ export default function EmojiPicker({ onSelect, onClose, anchorRef }: EmojiPicke
   return (
     <div
       ref={pickerRef}
-      className="fixed z-50 bg-white border border-gray-200 rounded-lg shadow-lg w-[320px] flex flex-col"
+      className="fixed z-50 bg-white border border-black/10 shadow-lg w-[320px] flex flex-col"
       style={{ top: position.top, left: position.left }}
     >
       {/* Search */}
-      <div className="p-2 border-b border-gray-100">
+      <div className="p-2 border-b border-black/5">
         <input
           ref={searchRef}
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search emoji..."
-          className="w-full px-3 py-1.5 text-sm border border-gray-200 rounded-md focus:outline-none focus:border-blue-400"
+          className="w-full px-3 py-1.5 text-sm border border-black/10 focus:outline-none focus:border-black"
         />
       </div>
 
       {/* Category tabs */}
       {!search.trim() && (
-        <div className="flex items-center gap-0.5 px-2 py-1 border-b border-gray-100">
+        <div className="flex items-center gap-0.5 px-2 py-1 border-b border-black/5">
           {EMOJI_CATEGORIES.map((cat, i) => (
             <button
               key={cat.label}
               onClick={() => scrollToCategory(i)}
               title={cat.label}
-              className={`p-1 rounded text-base hover:bg-gray-100 transition-colors ${
-                activeCategory === i ? 'bg-gray-100' : ''
+              className={`p-1 text-base hover:bg-black/5 transition-colors ${
+                activeCategory === i ? 'bg-black/5' : ''
               }`}
             >
               {cat.icon}
@@ -304,19 +304,19 @@ export default function EmojiPicker({ onSelect, onClose, anchorRef }: EmojiPicke
                 <button
                   key={`${emoji}-${i}`}
                   onClick={() => onSelect(emoji)}
-                  className="p-1 text-xl rounded hover:bg-gray-100 transition-colors text-center leading-none"
+                  className="p-1 text-xl hover:bg-black/5 transition-colors text-center leading-none"
                 >
                   {emoji}
                 </button>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-400 text-center py-4">No emoji found</p>
+            <p className="text-sm text-black/40 text-center py-4">No emoji found</p>
           )
         ) : (
           EMOJI_CATEGORIES.map((cat, catIndex) => (
             <div key={cat.label} id={`emoji-cat-${catIndex}`}>
-              <p className="text-xs font-medium text-gray-500 py-1 sticky top-0 bg-white">
+              <p className="text-xs font-medium text-black/50 py-1 sticky top-0 bg-white">
                 {cat.label}
               </p>
               <div className="grid grid-cols-8 gap-0.5">
@@ -324,7 +324,7 @@ export default function EmojiPicker({ onSelect, onClose, anchorRef }: EmojiPicke
                   <button
                     key={`${emoji}-${i}`}
                     onClick={() => onSelect(emoji)}
-                    className="p-1 text-xl rounded hover:bg-gray-100 transition-colors text-center leading-none"
+                    className="p-1 text-xl hover:bg-black/5 transition-colors text-center leading-none"
                   >
                     {emoji}
                   </button>

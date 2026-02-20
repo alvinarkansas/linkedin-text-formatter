@@ -10,14 +10,14 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f3f2ef]">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <header className="bg-white border-b border-black/10 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
+          <h1 className="text-2xl sm:text-3xl font-bold text-black text-center font-[Montserrat]">
             LinkedIn Text Formatter
           </h1>
-          <p className="text-gray-600 text-center mt-1 text-sm sm:text-base">
+          <p className="text-black/60 text-center mt-1 text-sm sm:text-base">
             Easily format the text of your LinkedIn post with bold, italic, underlined and more for free.
           </p>
         </div>
@@ -27,7 +27,7 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex flex-col lg:flex-row gap-6 lg:h-[calc(100vh-160px)]">
           {/* Editor Pane */}
-          <div className="flex-1 min-h-[400px] bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="flex-1 min-h-100 bg-white border border-black/10 shadow-sm overflow-hidden">
             <RichTextEditor onUpdate={setContent} />
           </div>
 
