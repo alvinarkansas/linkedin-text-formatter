@@ -48,6 +48,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: title,
     locale: "en_US",
+    images: {
+      url: `${siteUrl}/apple-touch-icon.png`,
+    }
   },
   twitter: {
     card: "summary_large_image",
