@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, SubmitEvent } from "react";
-import { X } from "lucide-react";
+import { X, Instagram, Youtube, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 const STORAGE_KEY = "ai_minimalist/newsletter_dismissed";
@@ -144,41 +144,45 @@ export default function NewsletterModal() {
 
         {/* Footer */}
         <div className="flex items-center justify-between px-8 md:px-12 py-4 bg-black text-white text-xs">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 md:gap-2">
             <a
               href="https://www.instagram.com/the_ai_minimalist?igsh=ZTFoY3lhczB4cnZp"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline hover:text-white/80 transition-colors font-[Montserrat]"
             >
-              Instagram
+              <Instagram size={16} className="md:hidden" />
+              <span className="hidden md:inline">Instagram</span>
             </a>
-            <span className="text-white/40">|</span>
+            <span className="text-white/40 hidden md:inline">|</span>
             <a
               href="https://www.youtube.com/@BrandRevAI"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline hover:text-white/80 transition-colors font-[Montserrat]"
             >
-              Youtube
+              <Youtube size={16} className="md:hidden" />
+              <span className="hidden md:inline">Youtube</span>
             </a>
-            <span className="text-white/40">|</span>
+            <span className="text-white/40 hidden md:inline">|</span>
             <a
               href="https://www.linkedin.com/in/jonathanchew/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline hover:text-white/80 transition-colors font-[Montserrat]"
             >
-              LinkedIn
+              <Linkedin size={16} className="md:hidden" />
+              <span className="hidden md:inline">LinkedIn</span>
             </a>
-            <span className="text-white/40">|</span>
+            <span className="text-white/40 hidden md:inline">|</span>
             <a
               href="https://www.tiktok.com/@jonandromina_ai"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline hover:text-white/80 transition-colors font-[Montserrat]"
             >
-              TikTok
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 md:hidden"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.98a8.21 8.21 0 0 0 4.76 1.52V7.05a4.84 4.84 0 0 1-1-.36Z"/></svg>
+              <span className="hidden md:inline">TikTok</span>
             </a>
           </div>
           <span className="text-white/60">
