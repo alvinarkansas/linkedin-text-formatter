@@ -78,16 +78,18 @@ export default function NewsletterModal() {
 
         <div className="flex flex-col md:flex-row">
           {/* Left content */}
-          <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
+          <div className="flex-1 p-8 md:p-12 md:pr-8 flex flex-col justify-center">
             <h2 className="text-4xl md:text-5xl font-extralight tracking-tight text-black leading-tight font-[Montserrat]">
               AI MINIMALIST
             </h2>
-            <p className="mt-4 text-sm md:text-base text-black/70 tracking-[0.2em] font-[Montserrat] leading-relaxed">
-              Subscribe for practical AI systems that give you time back.
+            <p className="mt-4 text-sm md:text-base text-black/70 font-[Montserrat] leading-relaxed">
+              Subscribe to learn the practical way to get more from AI so we can
+              do less. Get weekly insights, private resources, and tools that
+              can help you.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-              <div>
+              <div className="font-[Montserrat]">
                 <label
                   htmlFor="newsletter-email"
                   className="block text-sm text-black mb-1.5"
@@ -104,7 +106,7 @@ export default function NewsletterModal() {
                 />
               </div>
 
-              <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center justify-between gap-4 flex-wrap font-[Montserrat]">
                 <label className="flex items-center gap-2.5 cursor-pointer select-none">
                   <input
                     type="checkbox"
@@ -113,14 +115,14 @@ export default function NewsletterModal() {
                     className="w-4 h-4 border border-black/30 accent-black cursor-pointer"
                   />
                   <span className="text-sm text-black">
-                    Yes, subscribe me to the newsletter. <span>*</span>
+                    Yes, subscribe to AI Minimalist by Jonathan Chew<span>*</span>
                   </span>
                 </label>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-black text-white text-sm font-medium px-6 py-2.5 hover:bg-black/80 transition-colors disabled:opacity-60"
+                  className="bg-black text-white text-sm font-medium px-6 py-2.5 hover:bg-black/80 transition-colors disabled:opacity-60 font-[Montserrat]"
                 >
                   {loading ? "Subscribing..." : "Subscribe"}
                 </button>
@@ -181,7 +183,13 @@ export default function NewsletterModal() {
               rel="noopener noreferrer"
               className="hover:underline hover:text-white/80 transition-colors font-[Montserrat]"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 md:hidden"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.98a8.21 8.21 0 0 0 4.76 1.52V7.05a4.84 4.84 0 0 1-1-.36Z"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-4 md:hidden"
+              >
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.98a8.21 8.21 0 0 0 4.76 1.52V7.05a4.84 4.84 0 0 1-1-.36Z" />
+              </svg>
               <span className="hidden md:inline">TikTok</span>
             </a>
           </div>
