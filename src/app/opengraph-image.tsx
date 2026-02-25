@@ -45,7 +45,7 @@ export default function OgImage() {
             marginBottom: 16,
           }}
         >
-          LinkedIn Text Formatter
+          AI Minimalist&apos;s LinkedIn Formatter
         </div>
 
         {/* Subtitle */}

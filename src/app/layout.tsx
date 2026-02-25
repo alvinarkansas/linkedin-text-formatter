@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 const siteUrl = "https://linkedin-text-formatter.vercel.app/";
-const title = "LinkedIn Text Formatter";
+const title = "LinkedIn Formatter";
 const description =
   "Format your LinkedIn posts with bold, italic, underlined, strikethrough text and emoji — for free. Copy and paste ready.";
 
