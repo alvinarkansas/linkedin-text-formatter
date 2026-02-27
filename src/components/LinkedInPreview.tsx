@@ -18,7 +18,10 @@ interface LinkedInPreviewProps {
 }
 
 // Split content into above/below fold based on paragraph count
-function splitContent(html: string, maxParagraphs: number = 2): { above: string; below: string } {
+function splitContent(
+  html: string,
+  maxParagraphs: number = 2,
+): { above: string; below: string } {
   const paragraphs = html.split(/<\/p>/i);
 
   if (paragraphs.length <= maxParagraphs + 1) {
@@ -114,7 +117,7 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1">
                 <h3 className="font-semibold text-[14px] text-black hover:underline cursor-pointer">
-                  Jonathan Chew
+                  Jonathan Chew 🔰 AI Minimalist
                 </h3>
                 <span className="text-black/50 text-[14px]">• 1st</span>
               </div>
@@ -190,10 +193,26 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
 
         {/* Action Buttons */}
         <div className="px-2 py-1 flex items-center justify-between">
-          <ActionButton icon={<ThumbsUp size={18} />} label="Like" isMobile={isMobile} />
-          <ActionButton icon={<MessageCircle size={18} />} label="Comment" isMobile={isMobile} />
-          <ActionButton icon={<Repeat2 size={18} />} label="Repost" isMobile={isMobile} />
-          <ActionButton icon={<Send size={18} />} label="Send" isMobile={isMobile} />
+          <ActionButton
+            icon={<ThumbsUp size={18} />}
+            label="Like"
+            isMobile={isMobile}
+          />
+          <ActionButton
+            icon={<MessageCircle size={18} />}
+            label="Comment"
+            isMobile={isMobile}
+          />
+          <ActionButton
+            icon={<Repeat2 size={18} />}
+            label="Repost"
+            isMobile={isMobile}
+          />
+          <ActionButton
+            icon={<Send size={18} />}
+            label="Send"
+            isMobile={isMobile}
+          />
         </div>
       </div>
     </div>
@@ -203,7 +222,7 @@ export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
 function ActionButton({
   icon,
   label,
-  isMobile
+  isMobile,
 }: {
   icon: React.ReactNode;
   label: string;
@@ -212,7 +231,11 @@ function ActionButton({
   return (
     <button className="flex items-center gap-2 px-3 py-3 hover:bg-black/5 transition-colors text-black/60 hover:text-black">
       {icon}
-      {!isMobile && <span className="text-[14px] hidden font-medium sm:inline">{label}</span>}
+      {!isMobile && (
+        <span className="text-[14px] hidden font-medium sm:inline">
+          {label}
+        </span>
+      )}
     </button>
   );
 }
