@@ -5,15 +5,25 @@ import { X, Instagram, Youtube, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 const STORAGE_KEY = "ai_minimalist/newsletter_dismissed";
+const DISMISS_DURATION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+function isDismissed(): boolean {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const { expires } = JSON.parse(raw) as { expires: number };
+    if (Date.now() < expires) return true;
+    localStorage.removeItem(STORAGE_KEY); // expired — clean up
+    return false;
+  } catch {
+    return false;
+  }
+}
 
 export default function NewsletterModal() {
   const [visible, setVisible] = useState(() => {
     if (typeof window === "undefined") return false;
-    try {
-      return !localStorage.getItem(STORAGE_KEY);
-    } catch {
-      return true;
-    }
+    return !isDismissed();
   });
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
@@ -37,7 +47,10 @@ export default function NewsletterModal() {
   }, [toast, dismissToast]);
 
   const dismissPermanently = useCallback(() => {
-    localStorage.setItem(STORAGE_KEY, "1");
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ expires: Date.now() + DISMISS_DURATION_MS }),
+    );
     setVisible(false);
   }, []);
 
