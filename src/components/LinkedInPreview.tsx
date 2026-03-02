@@ -17,21 +17,101 @@ interface LinkedInPreviewProps {
   content: string;
 }
 
-// Split content into above/below fold based on paragraph count
+// Split content at the Nth </p> tag, just like the original.
+// When that split point falls inside a list item, the list is cleanly
+// split: above gets a proper closing tag and below reopens the list
+// (with correct `start` for ordered lists so numbering continues).
 function splitContent(
   html: string,
   maxParagraphs: number = 2,
 ): { above: string; below: string } {
-  const paragraphs = html.split(/<\/p>/i);
+  let pTagCount = 0;
+  let listDepth = 0;
+  let topListTag: "ul" | "ol" | "" = "";
+  let topListOpenTag = "";
+  let liCountInTopList = 0; // completed </li> items at depth 1 before split
+  let splitPos = -1;
+  let i = 0;
 
-  if (paragraphs.length <= maxParagraphs + 1) {
+  while (i < html.length) {
+    if (html[i] !== "<") {
+      i++;
+      continue;
+    }
+
+    const tagEnd = html.indexOf(">", i);
+    if (tagEnd === -1) break;
+
+    const tag = html.slice(i, tagEnd + 1);
+    const isClosing = tag.startsWith("</");
+    const tagName = tag.match(/<\/?(\w+)/)?.[1]?.toLowerCase();
+
+    if (tagName === "ul" || tagName === "ol") {
+      if (!isClosing) {
+        listDepth++;
+        if (listDepth === 1) {
+          topListTag = tagName as "ul" | "ol";
+          topListOpenTag = tag;
+          liCountInTopList = 0;
+        }
+      } else {
+        listDepth = Math.max(0, listDepth - 1);
+        if (listDepth === 0) {
+          topListTag = "";
+          topListOpenTag = "";
+          liCountInTopList = 0;
+        }
+      }
+    } else if (tagName === "li" && isClosing && listDepth === 1) {
+      liCountInTopList++;
+    } else if (tagName === "p" && isClosing) {
+      pTagCount++;
+      if (pTagCount === maxParagraphs) {
+        splitPos = tagEnd + 1;
+        break;
+      }
+    }
+
+    i = tagEnd + 1;
+  }
+
+  if (splitPos === -1) {
     return { above: html, below: "" };
   }
 
-  const aboveFold = paragraphs.slice(0, maxParagraphs).join("</p>") + "</p>";
-  const belowFold = paragraphs.slice(maxParagraphs).join("</p>");
+  let above = html.slice(0, splitPos);
+  let below = html.slice(splitPos);
 
-  return { above: aboveFold, below: belowFold };
+  if (listDepth > 0 && topListTag) {
+    // Split landed inside a list item. Repair both halves.
+    above = above + `</li></${topListTag}>`;
+
+    // Strip the orphaned </li> that opens `below`
+    const rest = below.trimStart().replace(/^<\/li>/i, "").trimStart();
+
+    if (rest.startsWith("<li")) {
+      // More items remain — reopen the list
+      if (topListTag === "ol") {
+        const startMatch = topListOpenTag.match(/start=["']?(\d+)["']?/i);
+        const listStartNum = startMatch ? parseInt(startMatch[1]) : 1;
+        const continueFrom = listStartNum + liCountInTopList + 1;
+        const startAttr = continueFrom !== 1 ? ` start="${continueFrom}"` : "";
+        below = `<ol${startAttr}>${rest}`;
+      } else {
+        below = `<ul>${rest}`;
+      }
+    } else {
+      // No more items; drop the closing list tag and use remaining content
+      below = rest.replace(new RegExp(`^<\\/${topListTag}>`, "i"), "").trimStart();
+    }
+  }
+
+  const trimmedBelow = below.trim();
+  if (!trimmedBelow) {
+    return { above: html, below: "" };
+  }
+
+  return { above, below: trimmedBelow };
 }
 
 export default function LinkedInPreview({ content }: LinkedInPreviewProps) {
