@@ -126,9 +126,28 @@ function parseHtmlNode(node: Node, styles: { bold: boolean; italic: boolean; und
       return '• ' + childContent + '\n';
     }
 
-    if (tagName === 'ul' || tagName === 'ol') {
+    if (tagName === 'ul') {
       return Array.from(node.childNodes)
-        .map(child => parseHtmlNode(child, newStyles))
+        .filter(child => child.nodeType === Node.ELEMENT_NODE && (child as Element).tagName.toLowerCase() === 'li')
+        .map(li => {
+          const liContent = Array.from(li.childNodes)
+            .map(c => parseHtmlNode(c, newStyles))
+            .join('');
+          return '• ' + liContent.trim() + '\n';
+        })
+        .join('');
+    }
+
+    if (tagName === 'ol') {
+      const start = parseInt(element.getAttribute('start') || '1', 10);
+      return Array.from(node.childNodes)
+        .filter(child => child.nodeType === Node.ELEMENT_NODE && (child as Element).tagName.toLowerCase() === 'li')
+        .map((li, idx) => {
+          const liContent = Array.from(li.childNodes)
+            .map(c => parseHtmlNode(c, newStyles))
+            .join('');
+          return `${start + idx}. ` + liContent.trim() + '\n';
+        })
         .join('');
     }
 
@@ -187,9 +206,19 @@ export function htmlToPlainText(html: string): string {
         return childContent + '\n\n';
       }
 
-      if (tagName === 'li') {
-        const childContent = Array.from(node.childNodes).map(extractText).join('');
-        return '• ' + childContent + '\n';
+      if (tagName === 'ul') {
+        return Array.from(node.childNodes)
+          .filter(child => child.nodeType === Node.ELEMENT_NODE && (child as Element).tagName.toLowerCase() === 'li')
+          .map(li => '• ' + Array.from(li.childNodes).map(extractText).join('').trim() + '\n')
+          .join('');
+      }
+
+      if (tagName === 'ol') {
+        const start = parseInt((node as Element).getAttribute('start') || '1', 10);
+        return Array.from(node.childNodes)
+          .filter(child => child.nodeType === Node.ELEMENT_NODE && (child as Element).tagName.toLowerCase() === 'li')
+          .map((li, idx) => `${start + idx}. ` + Array.from(li.childNodes).map(extractText).join('').trim() + '\n')
+          .join('');
       }
 
       return Array.from(node.childNodes).map(extractText).join('');
